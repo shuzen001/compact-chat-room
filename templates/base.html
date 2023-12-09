@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/style.css')}}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            /* 預設的字體大小 */
+        }
+
+        /* 當裝置螢幕寬度大於 600px 時，字體大小變為 24px */
+        @media screen and (min-width: 600px) {
+            h2 {
+                font-size: 30px;
+            }
+        }
+
+        /* 當裝置螢幕寬度大於 900px 時，字體大小變為 32px */
+        @media screen and (min-width: 900px) {
+            h2 {
+                font-size: 40px;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-gray': '#2A2A2A',
+                        'light-gray': '#F7F7F7',
+                        'blue-gray': '#3B3B4F',
+                        'light-blue': '#E7EDFF',
+                        'dark-blue': '#8DABC4',
+                        'green': '#23C16B',
+                        'red': '#FF334B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-blue-gray ">
+    <div class="content flex justify-center h-screen ">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    .buttons {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin: auto;
+    }
+    .buttons h2 {
+        margin-bottom: 20px;
+    }
+    .buttons label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .buttons button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    .create-btn {
+        width: 100%;
+        margin-bottom: 10px;
+        background-color: #3f648b;
+    }
+    .join-btn {
+        margin-bottom: 10px;
+        background-color: #3f648b;
+    }
+    @media screen and (min-width: 600px) {
+            h2 {
+                font-size: 24px;
+            }
+            
+        }
+
+        /* 當裝置螢幕寬度大於 900px 時，字體大小變為 32px */
+        @media screen and (min-width: 900px) {
+            h2 {
+                font-size: 32px;
+            }
+        }
+</style>
+<form method="POST" class="buttons bg-white p-4 rounded-lg shadow-md w-full md:w-2/3 lg:w-full bg-white p-6 m-auto">
+    <div class="header"><h2 style="text-align: center; width: auto;">Chat Room</h2></div>
+    <div class="mb-4" style="width: 100%;">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" placeholder="Enter your username" required value="{{name}}" />
+    </div>
+    <div class="join mb-6" style="width: 100%;">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Room Code" name="code" value="{{code}}" />
+    </div>
+
+    <!-- <button type="submit" name="join" class="join-btn">Join a Room</button> -->
+    <!-- <button type="submit" name="create" class="create-btn">Create a Room</button> -->
+    <div class="flex items-center justify-between" style="width: 100%;">
+        <button name="join" style="width: 45%;" class="join-btn bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <div>Join</div>
+        </button>
+        <button name="create" style="width: 45%;" type="submit" class="create-btn bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <div style="color: white;">Create</div>
+        </button>
+    </div>
+</form>
+{% endblock %}
