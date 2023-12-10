@@ -1,11 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
 import random
+import requests
+import os
+from openai import OpenAI
+client = OpenAI(api_key='sk-') #輸入你的API_KEY
+
 from string import ascii_uppercase
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret"
 socketio = SocketIO(app)
+
+# OpenAI GPT API 設置
 
 rooms = {}
 
@@ -26,6 +33,10 @@ def home():
         join = request.form.get("join", False)
         create = request.form.get("create", False)
 
+        if code == "GPT4":
+            session["name"] = name
+            return redirect(url_for("gpt_room"))
+
         if join != False and not code:
             flash("Please enter a room code.")
             return render_template("home.html", code=code, name=name)
@@ -45,6 +56,39 @@ def home():
 
 
     return render_template("home.html")
+
+@app.route('/gpt_room')
+def gpt_room():
+    name = session.get("name")
+    if session.get("name") is None:
+        return redirect(url_for("home"))
+    
+    return render_template('gpt_room.html', name=name)
+
+@socketio.on('send_message', namespace='/gpt_room')
+def handle_message(message):
+    response = call_gpt_api(message)
+    emit('receive_message', {'text': response}, room=request.sid)
+
+def call_gpt_api(message):
+    complete_response = ""
+    stream = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": f"{message}"}],
+        stream=True,
+        max_tokens=150,
+        temperature=0.9,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0.6,
+    )
+    try:
+        for chunk in stream:
+            if chunk.choices[0].delta.content is not None:
+                complete_response += chunk.choices[0].delta.content
+        return complete_response
+    except Exception as e:
+        return f"錯誤: {str(e)}"
 
 @app.route("/room")
 def room():
