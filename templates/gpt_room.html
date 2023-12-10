@@ -35,19 +35,21 @@
     .title {
         font-size: xx-large;
     }
+
+    .message-inner-box {
+        box-shadow: 0 0 30px #00000090;
+    }
+    
 </style>
 
 <!-- <div id="chat-box"></div>
 <input type="text" id="message-input" placeholder="輸入訊息...">
 <button id="send-button">發送</button> -->
 
-<div class="message-box bg-blue-gray" style="border: 0;">
-    <div class="w-full md:w-2/3 lg:w-1/2 xl:w-1/3 bg-white p-6 m-auto" style="border-radius:inherit;">
-        <h2 class="title" style="padding: 40px;">Chat Room: {{name}}</h2>
-        <div 
-        class="messages overflow-y-auto mb-6" 
-        style="height: 500px;" 
-        id="chat-box">
+<div class="message-box bg-blue-gray" style="border: 0; ">
+    <div class="message-inner-box w-full md:w-2/3 lg:w-1/2 xl:w-1/3 bg-white p-6 m-auto" style="border-radius:inherit;">
+        <h2 class="title" style="padding: 40px; font-size: 2.5vb;">還有GPT陪你聊天</h2>
+        <div class="messages overflow-y-auto mb-6" style="height: 500px;" id="chat-box">
         </div>
         <!-- 原本id = "messages" -->
         <div class="inputs flex items-center">
@@ -82,7 +84,7 @@
 
     socket.on('receive_message', function (data) {
         var chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML += '<p style="padding-bottom: 10px"><b>GPT :</b> ' + data.text + '</p>';
+        chatBox.innerHTML += '<p style="padding-bottom: 10px"><b style="color: green;">GPT</b> : ' + data.text + '</p>';
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 
@@ -93,11 +95,11 @@
         messageInput.value = '';
 
         var chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML += `<p style="padding-bottom: 10px"><b>${name} : </b>${message}</p>`;
+        chatBox.innerHTML += `<div class="arrowbox2-right"><p style="padding-bottom: 10px"><b style="color: blue;">${name}</b> : ${message}</p></div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     };
 
-    const sendMessage = function() {
+    const sendMessage = function () {
         // const message = document.getElementById("message-input");
         // if (message.value == "") return;
         // socketio.emit("message", { data: message.value });
@@ -108,7 +110,7 @@
         messageInput.value = '';
 
         var chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML += `<p style="padding-bottom: 10px"><b>${name} : </b>${message}</p>`;
+        chatBox.innerHTML += `<p style="padding-bottom: 10px"><b style="color: blue;">${name}</b> : ${message}</p>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     };
 </script>

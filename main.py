@@ -4,15 +4,18 @@ import random
 import requests
 import os
 from openai import OpenAI
-client = OpenAI(api_key='sk-') #輸入你的API_KEY
+
+api_key = os.getenv("OPENAI_API_KEY") #記得要設置環境變數 export OPENAI_API_KEY='your_openai_api_key'
+
+client = OpenAI(api_key=api_key) #輸入你的API_KEY 
+
+
 
 from string import ascii_uppercase
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret"
 socketio = SocketIO(app)
-
-# OpenAI GPT API 設置
 
 rooms = {}
 
@@ -74,11 +77,11 @@ def call_gpt_api(message):
     complete_response = ""
     stream = client.chat.completions.create(
         model="gpt-4",
-        messages=[{"role": "user", "content": f"{message}"}],
+        messages=[{"role": "user", "content": f"{message}"},{"role": "system", "content": "Only answer in traditional chinese"},],
         stream=True,
-        max_tokens=150,
-        temperature=0.9,
-        top_p=1,
+        max_tokens=300,
+        temperature=0.7,
+        top_p=0.9,
         frequency_penalty=0,
         presence_penalty=0.6,
     )

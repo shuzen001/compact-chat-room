@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="width=device-width, initial-scale=1.0, , user-scalable=no" name="viewport" />
 
     <title>Chat</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,8 +64,8 @@
     </script>
 </head>
 
-<body class="bg-blue-gray ">
-    <div class="content flex justify-center h-screen ">
+<body class="bg-blue-gray "style="max-height: 100vh;;">
+    <div class="content flex justify-center h-screen " style="max-height: 100vh; ">
         {% block content %}{% endblock %}
     </div>
 </body>
